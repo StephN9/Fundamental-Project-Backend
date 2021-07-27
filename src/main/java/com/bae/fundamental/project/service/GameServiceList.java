@@ -3,11 +3,13 @@ package com.bae.fundamental.project.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.bae.fundamental.project.data.Game;
 
+@Service
 public class GameServiceList implements GameService {
 
 	private List<Game> games = new ArrayList<>();

@@ -2,12 +2,14 @@ package com.bae.fundamental.project.service;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.bae.fundamental.project.data.Game;
 import com.bae.fundamental.project.data.repos.GameRepo;
 
 @Service
+@Primary
 public class GameServiceDB implements GameService {
 
 	private GameRepo repo;
@@ -52,7 +54,7 @@ public class GameServiceDB implements GameService {
 		if (this.repo.existsById(id)) {
 			return id + " Not deleted";
 		} else {
-			return id + "deleted";
+			return "Game at index " + id + " is deleted";
 		}
 
 	}

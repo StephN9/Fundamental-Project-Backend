@@ -13,11 +13,20 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(unique = true)
+	@Column
 	private String name;
 	private String platform;
 	private String genre;
 	private String playerType;
+
+	public Game(int id, String name, String platform, String genre, String playerType) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.platform = platform;
+		this.genre = genre;
+		this.playerType = playerType;
+	}
 
 	public Game(String name, String platform, String genre, String playerType) {
 		super();

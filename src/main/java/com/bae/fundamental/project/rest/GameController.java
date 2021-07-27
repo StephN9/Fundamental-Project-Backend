@@ -36,6 +36,7 @@ public class GameController {
 
 	@GetMapping("/getAllGames")
 	public List<Game> getAllGames() {
+		System.out.println("HELLO THERE ARE THIS MANY GAMES: " + this.service.getAllGames().size());
 		return this.service.getAllGames();
 	}
 
