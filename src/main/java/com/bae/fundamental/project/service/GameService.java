@@ -16,4 +16,10 @@ public interface GameService {
 
 	List<Game> getByName(String name);
 
+	List<Game> getByGenre(String genre);
+
+	List<Game> getByPlayerType(String playerType);
+
+	List<Game> getByPlatform(String platform);
+
 }

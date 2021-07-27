@@ -41,4 +41,19 @@ public class GameServiceList implements GameService {
 		return null;
 	}
 
+	@Override
+	public List<Game> getByGenre(String genre) {
+		return null;
+	}
+
+	@Override
+	public List<Game> getByPlayerType(String playerType) {
+		return null;
+	}
+
+	@Override
+	public List<Game> getByPlatform(String platform) {
+		return null;
+	}
+
 }

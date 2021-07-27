@@ -62,4 +62,19 @@ public class GameServiceDB implements GameService {
 		return this.repo.findByNameIgnoreCase(name);
 	}
 
+	@Override
+	public List<Game> getByGenre(String genre) {
+		return this.repo.findByGenreIgnoreCase(genre);
+	}
+
+	@Override
+	public List<Game> getByPlayerType(String playerType) {
+		return this.repo.findByPlayerTypeIgnoreCase(playerType);
+	}
+
+	@Override
+	public List<Game> getByPlatform(String platform) {
+		return this.repo.findByPlatformIgnoreCase(platform);
+	}
+
 }

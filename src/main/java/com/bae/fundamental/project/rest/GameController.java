@@ -57,4 +57,19 @@ public class GameController {
 		return this.service.getByName(name);
 	}
 
+	@GetMapping("/getByGenre/{genre}")
+	public List<Game> getByGenre(@PathVariable String genre) {
+		return this.service.getByGenre(genre);
+	}
+
+	@GetMapping("/getByPlayerType/{playerType}")
+	public List<Game> getByPlayerType(@PathVariable String playerType) {
+		return this.service.getByPlayerType(playerType);
+	}
+
+	@GetMapping("/getByPlatform/{platform}")
+	public List<Game> getByPlatform(@PathVariable String platform) {
+		return this.service.getByPlatform(platform);
+	}
+
 }

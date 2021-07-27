@@ -12,4 +12,10 @@ public interface GameRepo extends JpaRepository<Game, Integer> {
 
 	List<Game> findByNameIgnoreCase(String name);
 
+	List<Game> findByGenreIgnoreCase(String genre);
+
+	List<Game> findByPlayerTypeIgnoreCase(String playerType);
+
+	List<Game> findByPlatformIgnoreCase(String platform);
+
 }
