@@ -69,7 +69,6 @@ public class GameControllerIntegrationTest {
 
 		Game testGame = new Game("Witcher 3", "PS4", "Fantasy", "Single Player");
 		testGame.setId(1);
-		String testGameAsJSON = this.mapper.writeValueAsString(testGame);
 
 		List<Game> testGames = new ArrayList<Game>();
 		testGames.add(testGame);
@@ -110,6 +109,22 @@ public class GameControllerIntegrationTest {
 		ResultMatcher checkBody = content().json(gameAsJSON);
 		System.out.println("Hello");
 		this.mockMVC.perform(request).andExpect(checkStatus).andExpect(checkBody);
+
+	}
+
+	@Test
+	void findById() throws Exception {
+		RequestBuilder req = get("/getGame/1");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		Game testGame = new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player");
+
+		String testGameAsJSON = this.mapper.writeValueAsString(testGame);
+
+		ResultMatcher checkBody = content().json(testGameAsJSON);
+
+		this.mockMVC.perform(req).andExpect(checkStatus).andExpect(checkBody);
 
 	}
 

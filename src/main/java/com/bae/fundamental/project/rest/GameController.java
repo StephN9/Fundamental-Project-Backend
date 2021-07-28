@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,6 @@ import com.bae.fundamental.project.data.Game;
 import com.bae.fundamental.project.service.GameService;
 
 @RestController
-@CrossOrigin
 public class GameController {
 
 	private GameService service;
@@ -31,13 +29,17 @@ public class GameController {
 	public ResponseEntity<Game> createGame(@RequestBody Game game) {
 		Game created = this.service.createGame(game);
 		return new ResponseEntity<>(created, HttpStatus.CREATED);
-
 	}
 
 	@GetMapping("/getAllGames")
 	public List<Game> getAllGames() {
 		System.out.println("HELLO THERE ARE THIS MANY GAMES: " + this.service.getAllGames().size());
 		return this.service.getAllGames();
+	}
+
+	@GetMapping("/getGame/{id}")
+	public Game getGame(@PathVariable int id) {
+		return this.service.getGame(id);
 	}
 
 	@PutMapping("replaceGame/{id}")

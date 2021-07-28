@@ -32,19 +32,43 @@ public class GameServiceDB implements GameService {
 	}
 
 	@Override
-	public Game replaceGame(int id, Game newGame) {
+	public Game getGame(int id) {
 		Game found = this.repo.findById(id).get();
+		return found;
+	}
 
-		System.out.println("FOUND " + found);
+	@Override
+	public Game replaceGame(int id, Game newGame) {
+
+		Game found = this.repo.findById(id).get();
 
 		found.setName(newGame.getName());
 		found.setPlatform(newGame.getPlatform());
 		found.setGenre(newGame.getGenre());
 		found.setPlayerType(newGame.getPlayerType());
 
-		Game updatedGame = this.repo.save(found);
-		return updatedGame;
+		Game updated = this.repo.save(found);
+		return updated;
 
+	}
+
+	public Game newReplaceGame(int id, Game newGame) {
+		// pull out existing record
+		Game found = this.repo.findById(id).get();
+
+		System.out.println("FOUND: " + found);
+
+		// modify record
+		found.setPlatform(newGame.getPlatform());
+		found.setName(newGame.getName());
+		found.setGenre(newGame.getGenre());
+		found.setPlayerType(newGame.getPlayerType());
+
+		System.out.println("FOUND AFTER UPDATE: " + found);
+		// save it back to overwrite it
+		Game updated = this.repo.save(found);
+		System.out.println("UPDATED: " + updated);
+		return updated;
 	}
 
 	@Override

@@ -1,5 +1,103 @@
 package com.bae.fundamental.project.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
+
+import com.bae.fundamental.project.data.Game;
+import com.bae.fundamental.project.data.repos.GameRepo;
+
+@SpringBootTest
+@ActiveProfiles("test")
 public class GameServiceDBUnitTest {
+
+	@Autowired
+	private GameServiceDB service;
+
+	@MockBean
+	private GameRepo repo;
+
+	@Test
+	void testCreate() {
+		Game newGame = new Game("Witcher", "PS4", "Fantasy", "Single player");
+
+		Game savedGame = new Game(1, "Witcher", "PS4", "Fantasy", "Single player");
+
+		Mockito.when(this.repo.save(newGame)).thenReturn(savedGame);
+
+		assertThat(this.service.createGame(newGame)).isEqualTo(savedGame);
+
+		Mockito.verify(this.repo, Mockito.times(1)).save(newGame);
+
+	}
+
+	@Test
+	void testUpdate() {
+		int id = 1;
+
+		Game testGame = new Game(id, "Stardew Valley", "PC", "Farming", "Single/Multiplayer");
+		Game testNewGame = new Game(id, "Witcher 3", "PS4", "Fantasy", "Single Player");
+
+		Mockito.when(this.repo.findById(id)).thenReturn(Optional.of(testGame));
+		Mockito.when(this.repo.save(new Game(id, "Witcher 3", "PS4", "Fantasy", "Single Player")))
+				.thenReturn(testNewGame);
+
+		Game actual = this.service.replaceGame(id, testNewGame);
+
+		assertThat(actual).isEqualTo(testNewGame);
+
+		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
+		Mockito.verify(this.repo, Mockito.times(1)).save(new Game(id, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+
+	}
+
+	@Test
+	void testGetAll() {
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+		Mockito.when(this.repo.findAll()).thenReturn(testGames);
+
+		assertThat(this.service.getAllGames()).isEqualTo(testGames);
+
+		Mockito.verify(this.repo, Mockito.times(1)).findAll();
+	}
+
+	@Test
+	void testDeleteWorks() {
+		int id = 1;
+		Mockito.when(this.repo.existsById(id)).thenReturn(false);
+
+		assertThat(this.service.deleteGame(id)).isEqualTo("Game at index " + id + " is deleted");
+		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
+	}
+
+	@Test
+	void testDeleteFails() {
+		int id = 1;
+
+		Mockito.when(this.repo.existsById(id)).thenReturn(true);
+
+		assertThat(this.service.deleteGame(id)).isEqualTo(id + " Not deleted");
+		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
+	}
+
+	@Test
+	void testGetAllByName() {
+		List<Game> testGames = List.of(new Game(1, "Witcher", "PS4", "Fantasy", "Single player"));
+
+		String search = "witcher";
+		Mockito.when(this.repo.findByNameIgnoreCase(search)).thenReturn(testGames);
+		assertThat(this.service.getByName(search)).isEqualTo(testGames);
+
+		Mockito.verify(this.repo, Mockito.times(1)).findByNameIgnoreCase(search);
+
+	}
 
 }

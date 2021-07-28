@@ -39,7 +39,6 @@ public class Game {
 	}
 
 	public Game() {
-
 	}
 
 	@Override
@@ -49,12 +48,15 @@ public class Game {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Game other = (Game) obj;
 		return Objects.equals(genre, other.genre) && id == other.id && Objects.equals(name, other.name)
 				&& Objects.equals(platform, other.platform) && Objects.equals(playerType, other.playerType);
