@@ -128,4 +128,19 @@ public class GameControllerIntegrationTest {
 
 	}
 
+	@Test
+	void testFindByName() throws Exception {
+		RequestBuilder request = get("/getByName/Witcher 3");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+
+		String testGameAsJSON = this.mapper.writeValueAsString(testGames);
+
+		ResultMatcher checkBody = content().json(testGameAsJSON);
+
+		this.mockMVC.perform(request).andExpect(checkStatus).andExpect(checkBody);
+	}
+
 }
