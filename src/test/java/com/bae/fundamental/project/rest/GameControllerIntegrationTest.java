@@ -143,4 +143,18 @@ public class GameControllerIntegrationTest {
 		this.mockMVC.perform(request).andExpect(checkStatus).andExpect(checkBody);
 	}
 
+	@Test
+	void testFindByPlatform() throws Exception {
+		RequestBuilder request = get("/getByPlatform/PS4");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+
+		String testGameAsJSON = this.mapper.writeValueAsString(testGames);
+
+		ResultMatcher checkBody = content().json(testGameAsJSON);
+
+		this.mockMVC.perform(request).andExpect(checkBody).andExpect(checkStatus);
+	}
 }

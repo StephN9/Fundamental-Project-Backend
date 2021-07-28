@@ -100,4 +100,16 @@ public class GameServiceDBUnitTest {
 
 	}
 
+	@Test
+	void testGetAllByPlatform() {
+		List<Game> testGames = List.of(new Game(1, "Witcher", "PS4", "Fantasy", "Single player"));
+
+		String search = "PS4";
+		Mockito.when(this.repo.findByPlatformIgnoreCase(search)).thenReturn(testGames);
+		assertThat(this.service.getByPlatform(search)).isEqualTo(testGames);
+
+		Mockito.verify(this.repo, Mockito.times(1)).findByPlatformIgnoreCase(search);
+
+	}
+
 }
