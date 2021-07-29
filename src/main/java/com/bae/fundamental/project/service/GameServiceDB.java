@@ -52,25 +52,6 @@ public class GameServiceDB implements GameService {
 
 	}
 
-	public Game newReplaceGame(int id, Game newGame) {
-		// pull out existing record
-		Game found = this.repo.findById(id).get();
-
-		System.out.println("FOUND: " + found);
-
-		// modify record
-		found.setPlatform(newGame.getPlatform());
-		found.setName(newGame.getName());
-		found.setGenre(newGame.getGenre());
-		found.setPlayerType(newGame.getPlayerType());
-
-		System.out.println("FOUND AFTER UPDATE: " + found);
-		// save it back to overwrite it
-		Game updated = this.repo.save(found);
-		System.out.println("UPDATED: " + updated);
-		return updated;
-	}
-
 	@Override
 	public String deleteGame(int id) {
 		this.repo.deleteById(id);

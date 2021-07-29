@@ -41,7 +41,6 @@ public class GameServiceList implements GameService {
 		return "Game at index " + id + " is deleted";
 	}
 
-	// double check that these should return null
 	@Override
 	public List<Game> getByName(String name) {
 		return null;

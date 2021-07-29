@@ -114,7 +114,7 @@ public class GameControllerIntegrationTest {
 
 	@Test
 	void findById() throws Exception {
-		RequestBuilder req = get("/getGame/1");
+		RequestBuilder request = get("/getGame/1");
 
 		ResultMatcher checkStatus = status().isOk();
 
@@ -124,7 +124,7 @@ public class GameControllerIntegrationTest {
 
 		ResultMatcher checkBody = content().json(testGameAsJSON);
 
-		this.mockMVC.perform(req).andExpect(checkStatus).andExpect(checkBody);
+		this.mockMVC.perform(request).andExpect(checkStatus).andExpect(checkBody);
 
 	}
 

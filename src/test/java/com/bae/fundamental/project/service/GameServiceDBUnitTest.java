@@ -36,6 +36,7 @@ public class GameServiceDBUnitTest {
 		assertThat(this.service.createGame(newGame)).isEqualTo(savedGame);
 
 		Mockito.verify(this.repo, Mockito.times(1)).save(newGame);
+		Mockito.verifyNoMoreInteractions(this.repo);
 
 	}
 
@@ -56,7 +57,7 @@ public class GameServiceDBUnitTest {
 
 		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
 		Mockito.verify(this.repo, Mockito.times(1)).save(new Game(id, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
-
+		Mockito.verifyNoMoreInteractions(this.repo);
 	}
 
 	@Test
@@ -66,7 +67,11 @@ public class GameServiceDBUnitTest {
 
 		assertThat(this.service.getAllGames()).isEqualTo(testGames);
 
+		assertThat(testGames.size()).isEqualTo(1);
+
 		Mockito.verify(this.repo, Mockito.times(1)).findAll();
+		Mockito.verifyNoMoreInteractions(this.repo);
+		;
 	}
 
 	@Test
@@ -76,6 +81,7 @@ public class GameServiceDBUnitTest {
 
 		assertThat(this.service.deleteGame(id)).isEqualTo("Game at index " + id + " is deleted");
 		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
+
 	}
 
 	@Test
@@ -86,6 +92,7 @@ public class GameServiceDBUnitTest {
 
 		assertThat(this.service.deleteGame(id)).isEqualTo(id + " Not deleted");
 		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
+
 	}
 
 	@Test
@@ -95,9 +102,10 @@ public class GameServiceDBUnitTest {
 		String search = "witcher";
 		Mockito.when(this.repo.findByNameIgnoreCase(search)).thenReturn(testGames);
 		assertThat(this.service.getByName(search)).isEqualTo(testGames);
+		assertThat(testGames.size()).isEqualTo(1);
 
 		Mockito.verify(this.repo, Mockito.times(1)).findByNameIgnoreCase(search);
-
+		Mockito.verifyNoMoreInteractions(this.repo);
 	}
 
 	@Test
@@ -107,9 +115,10 @@ public class GameServiceDBUnitTest {
 		String search = "PC";
 		Mockito.when(this.repo.findByPlatformIgnoreCase(search)).thenReturn(testGames);
 		assertThat(this.service.getByPlatform(search)).isEqualTo(testGames);
+		assertThat(testGames.size()).isEqualTo(1);
 
 		Mockito.verify(this.repo, Mockito.times(1)).findByPlatformIgnoreCase(search);
-
+		Mockito.verifyNoMoreInteractions(this.repo);
 	}
 
 	@Test
@@ -119,9 +128,10 @@ public class GameServiceDBUnitTest {
 		String search = "Farming";
 		Mockito.when(this.repo.findByPlatformIgnoreCase(search)).thenReturn(testGames);
 		assertThat(this.service.getByPlatform(search)).isEqualTo(testGames);
+		assertThat(testGames.size()).isEqualTo(1);
 
 		Mockito.verify(this.repo, Mockito.times(1)).findByPlatformIgnoreCase(search);
-
+		Mockito.verifyNoMoreInteractions(this.repo);
 	}
 
 	@Test
@@ -131,9 +141,21 @@ public class GameServiceDBUnitTest {
 		String search = "Both";
 		Mockito.when(this.repo.findByPlatformIgnoreCase(search)).thenReturn(testGames);
 		assertThat(this.service.getByPlatform(search)).isEqualTo(testGames);
+		assertThat(testGames.size()).isEqualTo(1);
 
 		Mockito.verify(this.repo, Mockito.times(1)).findByPlatformIgnoreCase(search);
+		Mockito.verifyNoMoreInteractions(this.repo);
+	}
 
+	@Test
+	void testGetByIdSuccess() throws Exception {
+		Game game = new Game(1, "Stardew Valley", "PC", "Farming", "Both");
+
+		Mockito.when(this.repo.findById(1)).thenReturn(Optional.of(game));
+		assertThat(this.service.getGame(1)).isEqualTo(game);
+
+		Mockito.verify(this.repo, Mockito.times(1)).findById(1);
+		Mockito.verifyNoMoreInteractions(this.repo);
 	}
 
 }
