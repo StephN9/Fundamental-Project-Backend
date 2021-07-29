@@ -1,5 +1,6 @@
 package com.bae.fundamental.project.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,6 +39,11 @@ public class GameControllerIntegrationTest {
 
 	@Autowired
 	private ObjectMapper mapper;
+
+	@Test
+	void contextLoads() throws Exception {
+		assertThat(mockMVC).isNotNull();
+	}
 
 	@Test
 	void testCreate() throws Exception {
