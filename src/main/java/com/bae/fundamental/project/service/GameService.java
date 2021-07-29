@@ -20,8 +20,8 @@ public interface GameService {
 
 	List<Game> getByGenre(String genre);
 
-	public List<Game> getByPlayerType(String playerType);
+	List<Game> getByPlayerType(String playerType);
 
-	public List<Game> getByPlatform(String platform);
+	List<Game> getByPlatform(String platform);
 
 }

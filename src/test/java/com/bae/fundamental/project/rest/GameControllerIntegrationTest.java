@@ -42,7 +42,7 @@ public class GameControllerIntegrationTest {
 	@Test
 	void testCreate() throws Exception {
 
-		Game testGame = new Game("Witcher", "PS4", "Fantasy", "Single Player");
+		Game testGame = new Game("Witcher", "PS4", "Fantasy", "Singleplayer");
 
 		String testGameAsJSON = this.mapper.writeValueAsString(testGame);
 
@@ -52,7 +52,7 @@ public class GameControllerIntegrationTest {
 
 		ResultMatcher checkStatus = status().isCreated();
 
-		Game testCreatedGame = new Game("Witcher", "PS4", "Fantasy", "Single Player");
+		Game testCreatedGame = new Game("Witcher", "PS4", "Fantasy", "Singleplayer");
 		testCreatedGame.setId(2);
 		String testCreatedGameAsJSON = this.mapper.writeValueAsString(testCreatedGame);
 
@@ -67,7 +67,7 @@ public class GameControllerIntegrationTest {
 
 		RequestBuilder request = get("/getAllGames");
 
-		Game testGame = new Game("Witcher 3", "PS4", "Fantasy", "Single Player");
+		Game testGame = new Game("Witcher 3", "PS4", "Fantasy", "Singleplayer");
 		testGame.setId(1);
 
 		List<Game> testGames = new ArrayList<Game>();
@@ -98,7 +98,7 @@ public class GameControllerIntegrationTest {
 	void testReplaceGame() throws Exception {
 
 		int id = 1;
-		Game game = new Game(id, "Witcher", "PS4", "Fantasy", "Single Player");
+		Game game = new Game(id, "Witcher", "PS4", "Fantasy", "Singleplayer");
 
 		String gameAsJSON = this.mapper.writeValueAsString(game);
 		System.out.println("Hello");
@@ -118,7 +118,7 @@ public class GameControllerIntegrationTest {
 
 		ResultMatcher checkStatus = status().isOk();
 
-		Game testGame = new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player");
+		Game testGame = new Game(1, "Witcher 3", "PS4", "Fantasy", "Singleplayer");
 
 		String testGameAsJSON = this.mapper.writeValueAsString(testGame);
 
@@ -134,7 +134,7 @@ public class GameControllerIntegrationTest {
 
 		ResultMatcher checkStatus = status().isOk();
 
-		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
 
 		String testGameAsJSON = this.mapper.writeValueAsString(testGames);
 
@@ -149,7 +149,7 @@ public class GameControllerIntegrationTest {
 
 		ResultMatcher checkStatus = status().isOk();
 
-		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
 
 		String testGameAsJSON = this.mapper.writeValueAsString(testGames);
 
@@ -157,4 +157,37 @@ public class GameControllerIntegrationTest {
 
 		this.mockMVC.perform(request).andExpect(checkBody).andExpect(checkStatus);
 	}
+
+	@Test
+	void testFindByGenre() throws Exception {
+		RequestBuilder request = get("/getByGenre/Fantasy");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
+
+		String testGameAsJSON = this.mapper.writeValueAsString(testGames);
+
+		ResultMatcher checkBody = content().json(testGameAsJSON);
+
+		this.mockMVC.perform(request).andExpect(checkBody).andExpect(checkStatus);
+
+	}
+
+	@Test
+	void testFindByPlayerType() throws Exception {
+		RequestBuilder request = get("/getByPlayerType/Singleplayer");
+
+		ResultMatcher checkStatus = status().isOk();
+
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
+
+		String testGameAsJSON = this.mapper.writeValueAsString(testGames);
+
+		ResultMatcher checkBody = content().json(testGameAsJSON);
+
+		this.mockMVC.perform(request).andExpect(checkBody).andExpect(checkStatus);
+
+	}
+
 }

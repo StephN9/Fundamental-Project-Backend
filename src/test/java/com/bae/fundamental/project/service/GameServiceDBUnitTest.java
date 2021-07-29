@@ -27,9 +27,9 @@ public class GameServiceDBUnitTest {
 
 	@Test
 	void testCreate() {
-		Game newGame = new Game("Witcher", "PS4", "Fantasy", "Single player");
+		Game newGame = new Game("Witcher", "PS4", "Fantasy", "Singleplayer");
 
-		Game savedGame = new Game(1, "Witcher", "PS4", "Fantasy", "Single player");
+		Game savedGame = new Game(1, "Witcher", "PS4", "Fantasy", "Singleplayer");
 
 		Mockito.when(this.repo.save(newGame)).thenReturn(savedGame);
 
@@ -43,11 +43,11 @@ public class GameServiceDBUnitTest {
 	void testUpdate() {
 		int id = 1;
 
-		Game testGame = new Game(id, "Stardew Valley", "PC", "Farming", "Single/Multiplayer");
-		Game testNewGame = new Game(id, "Witcher 3", "PS4", "Fantasy", "Single Player");
+		Game testGame = new Game(id, "Stardew Valley", "PC", "Farming", "Both");
+		Game testNewGame = new Game(id, "Witcher 3", "PS4", "Fantasy", "Singleplayer");
 
 		Mockito.when(this.repo.findById(id)).thenReturn(Optional.of(testGame));
-		Mockito.when(this.repo.save(new Game(id, "Witcher 3", "PS4", "Fantasy", "Single Player")))
+		Mockito.when(this.repo.save(new Game(id, "Witcher 3", "PS4", "Fantasy", "Singleplayer")))
 				.thenReturn(testNewGame);
 
 		Game actual = this.service.replaceGame(id, testNewGame);
@@ -55,13 +55,13 @@ public class GameServiceDBUnitTest {
 		assertThat(actual).isEqualTo(testNewGame);
 
 		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
-		Mockito.verify(this.repo, Mockito.times(1)).save(new Game(id, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+		Mockito.verify(this.repo, Mockito.times(1)).save(new Game(id, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
 
 	}
 
 	@Test
 	void testGetAll() {
-		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Single Player"));
+		List<Game> testGames = List.of(new Game(1, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
 		Mockito.when(this.repo.findAll()).thenReturn(testGames);
 
 		assertThat(this.service.getAllGames()).isEqualTo(testGames);
@@ -90,7 +90,7 @@ public class GameServiceDBUnitTest {
 
 	@Test
 	void testGetAllByName() {
-		List<Game> testGames = List.of(new Game(1, "Witcher", "PS4", "Fantasy", "Single player"));
+		List<Game> testGames = List.of(new Game(1, "Witcher", "PS4", "Fantasy", "Singleplayer"));
 
 		String search = "witcher";
 		Mockito.when(this.repo.findByNameIgnoreCase(search)).thenReturn(testGames);
@@ -102,9 +102,33 @@ public class GameServiceDBUnitTest {
 
 	@Test
 	void testGetAllByPlatform() {
-		List<Game> testGames = List.of(new Game(1, "Witcher", "PS4", "Fantasy", "Single player"));
+		List<Game> testGames = List.of(new Game(1, "Ark", "PC", "Open-world", "Singleplayer"));
 
-		String search = "PS4";
+		String search = "PC";
+		Mockito.when(this.repo.findByPlatformIgnoreCase(search)).thenReturn(testGames);
+		assertThat(this.service.getByPlatform(search)).isEqualTo(testGames);
+
+		Mockito.verify(this.repo, Mockito.times(1)).findByPlatformIgnoreCase(search);
+
+	}
+
+	@Test
+	void testGameByGenre() {
+		List<Game> testGames = List.of(new Game(1, "Stardew Valley", "PC", "Farming", "Both"));
+
+		String search = "Farming";
+		Mockito.when(this.repo.findByPlatformIgnoreCase(search)).thenReturn(testGames);
+		assertThat(this.service.getByPlatform(search)).isEqualTo(testGames);
+
+		Mockito.verify(this.repo, Mockito.times(1)).findByPlatformIgnoreCase(search);
+
+	}
+
+	@Test
+	void testGameByPlayerType() {
+		List<Game> testGames = List.of(new Game(1, "Stardew Valley", "PC", "Farming", "Both"));
+
+		String search = "Both";
 		Mockito.when(this.repo.findByPlatformIgnoreCase(search)).thenReturn(testGames);
 		assertThat(this.service.getByPlatform(search)).isEqualTo(testGames);
 
