@@ -31,12 +31,16 @@ public class GameController {
 	public ResponseEntity<Game> createGame(@RequestBody Game game) {
 		Game created = this.service.createGame(game);
 		return new ResponseEntity<>(created, HttpStatus.CREATED);
-
 	}
 
 	@GetMapping("/getAllGames")
 	public List<Game> getAllGames() {
 		return this.service.getAllGames();
+	}
+
+	@GetMapping("/getGame/{id}")
+	public Game getGame(@PathVariable int id) {
+		return this.service.getGame(id);
 	}
 
 	@PutMapping("replaceGame/{id}")

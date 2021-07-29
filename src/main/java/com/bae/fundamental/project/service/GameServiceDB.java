@@ -2,12 +2,14 @@ package com.bae.fundamental.project.service;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.bae.fundamental.project.data.Game;
 import com.bae.fundamental.project.data.repos.GameRepo;
 
 @Service
+@Primary
 public class GameServiceDB implements GameService {
 
 	private GameRepo repo;
@@ -30,18 +32,23 @@ public class GameServiceDB implements GameService {
 	}
 
 	@Override
-	public Game replaceGame(int id, Game newGame) {
+	public Game getGame(int id) {
 		Game found = this.repo.findById(id).get();
+		return found;
+	}
 
-		System.out.println("FOUND " + found);
+	@Override
+	public Game replaceGame(int id, Game newGame) {
+
+		Game found = this.repo.findById(id).get();
 
 		found.setName(newGame.getName());
 		found.setPlatform(newGame.getPlatform());
 		found.setGenre(newGame.getGenre());
 		found.setPlayerType(newGame.getPlayerType());
 
-		Game updatedGame = this.repo.save(found);
-		return updatedGame;
+		Game updated = this.repo.save(found);
+		return updated;
 
 	}
 
@@ -52,7 +59,7 @@ public class GameServiceDB implements GameService {
 		if (this.repo.existsById(id)) {
 			return id + " Not deleted";
 		} else {
-			return id + "deleted";
+			return "Game at index " + id + " is deleted";
 		}
 
 	}

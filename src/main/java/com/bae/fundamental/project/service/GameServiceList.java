@@ -3,11 +3,11 @@ package com.bae.fundamental.project.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Service;
 
 import com.bae.fundamental.project.data.Game;
 
+@Service
 public class GameServiceList implements GameService {
 
 	private List<Game> games = new ArrayList<>();
@@ -25,17 +25,22 @@ public class GameServiceList implements GameService {
 	}
 
 	@Override
-	public Game replaceGame(@PathVariable int id, @RequestBody Game newGame) {
+	public Game replaceGame(int id, Game newGame) {
 		return this.games.set(id, newGame);
 	}
 
 	@Override
-	public String deleteGame(@PathVariable int id) {
-		games.remove(id);
+	public Game getGame(int id) {
+		Game found = this.games.get(id);
+		return found;
+	}
+
+	@Override
+	public String deleteGame(int id) {
+		this.games.remove(id);
 		return "Game at index " + id + " is deleted";
 	}
 
-	// double check that these should return null
 	@Override
 	public List<Game> getByName(String name) {
 		return null;
