@@ -2,6 +2,7 @@ package com.bae.fundamental.project.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,11 @@ public class GameServiceDBUnitTest {
 
 	@MockBean
 	private GameRepo repo;
+
+	@Test
+	void contextLoads() throws Exception {
+		assertThat(service).isNotNull();
+	}
 
 	@Test
 	void testCreate() {
@@ -71,7 +77,17 @@ public class GameServiceDBUnitTest {
 
 		Mockito.verify(this.repo, Mockito.times(1)).findAll();
 		Mockito.verifyNoMoreInteractions(this.repo);
-		;
+
+	}
+
+	@Test
+	void testGetAllList() {
+		List<Game> testGames = new ArrayList<>();
+
+		testGames.add(new Game(1, "Witcher 3", "PS4", "Fantasy", "Singleplayer"));
+		testGames.add(new Game(2, "Stardew Valley", "PC", "Farming", "Both"));
+
+		assertThat(testGames.size()).isEqualTo(2);
 	}
 
 	@Test
