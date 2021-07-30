@@ -11,8 +11,8 @@
 8.	Continued Development
 
 #### Resources
-* Presentation - google slides
-* Scrum Board - Atlassian
+* Presentation - [google slides](https://docs.google.com/presentation/d/1iGmPdOANXnOZLVC4skH1TBxas6Vv-GnSfqINt74PAAU/edit?usp=sharing)
+* Scrum Board - [Atlassian](https://team-1624352124374.atlassian.net/jira/software/projects/FP/boards/3/roadmap?shared=&atlOrigin=eyJpIjoiY2JhNDU2YjQwYjdhNDUzYThlYzBhZmIzODNiZWJlNGQiLCJwIjoiaiJ9)
 
 #### Brief
 The brief for this project was to create a CRUD application with the utilisation of supporting tools, methodologies and technologies that encapsulate all core modules covered during training.
